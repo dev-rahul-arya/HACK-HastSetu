@@ -80,7 +80,12 @@ _(Tracking here instead of an external task list.)_
       (rule tips + one Gemini coaching sentence, `prompts.js`, silent fallback);
       ghost-overlay toggle + target skeleton in `TrackerMount`. Lesson now shows
       the full feedback panel.
-- [ ] **Stage 4 — Practice.** Review queue (SRS), free drill, speed round.
+- [x] **Stage 4 — Practice.** Tabbed `Practice.jsx`: **review queue** (SRS
+      due-today session → summary with avg accuracy, XP, weakest sign + review
+      bonus), **free drill** (pick a unit → endless shuffled signs with full
+      feedback), **speed round** (30s sprint, back-to-back captures, ≥80 combo
+      multiplier, personal best). `TrackerMount.capture()` now takes options
+      (signId, durationMs, skipCountdown) and returns the result.
 - [ ] **Stage 5 — Converse.** Scenarios, turn loop, Gemini partner + scripted
       fallback, speech toggle.
 - [ ] **Stage 6 — Progress.** Dashboard, mastery grid, SVG trend chart, badges.

@@ -60,6 +60,7 @@ function TrackerMount({ sign, onResult, onPhaseChange }, ref) {
   const mountRef = useRef(null);
   const trackerRef = useRef(null);
   const aliveRef = useRef(true);
+  const phaseRef = useRef("loading"); // synchronous mirror of phase for capture()
   const [phase, setPhase] = useState("loading");
   const [countdown, setCountdown] = useState(3);
   const [kind, setKind] = useState("mock");
@@ -69,6 +70,7 @@ function TrackerMount({ sign, onResult, onPhaseChange }, ref) {
   const setPhaseSafe = useCallback(
     (p) => {
       if (!aliveRef.current) return;
+      phaseRef.current = p;
       setPhase(p);
       onPhaseChange?.(p);
     },
@@ -107,34 +109,49 @@ function TrackerMount({ sign, onResult, onPhaseChange }, ref) {
     };
   }, [simulationOn, setPhaseSafe]);
 
-  const capture = useCallback(async () => {
+  const capture = useCallback(async (opts = {}) => {
     const tracker = trackerRef.current;
-    if (!tracker || phase !== "idle" || !sign) return;
+    if (!tracker || phaseRef.current !== "idle") return null;
+    // Speed rounds pass an explicit signId (the prompt changes faster than the
+    // ref updates); lessons rely on the sign prop.
+    const targetId = opts.signId || sign?.id;
+    if (!targetId) return null;
+    const { durationMs = sign?.captureMs || 3000, skipCountdown = false } = opts;
 
-    // 3 · 2 · 1 countdown
-    setPhaseSafe("countdown");
-    for (let n = 3; n >= 1; n--) {
-      setCountdown(n);
-      await new Promise((r) => setTimeout(r, 650));
-      if (!aliveRef.current) return;
+    if (!skipCountdown) {
+      // 3 · 2 · 1 countdown
+      setPhaseSafe("countdown");
+      for (let n = 3; n >= 1; n--) {
+        setCountdown(n);
+        await new Promise((r) => setTimeout(r, 650));
+        if (!aliveRef.current) return null;
+      }
     }
 
     setPhaseSafe("capturing");
     let result;
     try {
-      result = await tracker.captureAttempt(sign.id, sign.captureMs || 3000);
+      result = await tracker.captureAttempt(targetId, durationMs);
     } catch {
       if (aliveRef.current) setPhaseSafe("idle");
-      return;
+      return null;
     }
-    if (!aliveRef.current) return;
+    if (!aliveRef.current) return null;
 
     setPhaseSafe("result");
     onResult?.(result);
-    setTimeout(() => aliveRef.current && setPhaseSafe("idle"), 700);
-  }, [phase, sign, onResult, setPhaseSafe]);
+    // Speed rounds fire back-to-back: return to idle immediately so the next
+    // capture can start; lessons linger on a success flash.
+    if (skipCountdown) setPhaseSafe("idle");
+    else setTimeout(() => aliveRef.current && setPhaseSafe("idle"), 700);
+    return result;
+  }, [sign, onResult, setPhaseSafe]);
 
-  useImperativeHandle(ref, () => ({ capture, phase }), [capture, phase]);
+  useImperativeHandle(
+    ref,
+    () => ({ capture, get phase() { return phaseRef.current; } }),
+    [capture],
+  );
 
   // Ask the tracker for a target pose for the ghost overlay; hide the toggle if
   // none is available (PRD §4.5).
