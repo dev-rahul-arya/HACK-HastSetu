@@ -1,0 +1,304 @@
+/* Feature-page styles (Home hero, Learn, Lesson, TrackerMount, Practice,
+   Converse, Progress, Settings). "Landmark" design language. */
+
+/* ============ Hand-constellation motif ============ */
+.hand-constellation {
+  width: 100%;
+  height: auto;
+  color: inherit;
+}
+.hc-lines line {
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+.hc-node {
+  fill: currentColor;
+}
+.hc-node--active {
+  fill: var(--marigold);
+}
+
+/* Orchestrated load: lines draw in, nodes pop, active node breathes */
+.hand-constellation.is-animated .hc-lines line {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  animation: hc-draw 0.7s var(--ease) forwards;
+  animation-delay: calc(var(--i) * 45ms + 150ms);
+}
+.hand-constellation.is-animated .hc-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  animation: hc-pop 0.4s var(--ease-spring) forwards;
+  animation-delay: calc(var(--i) * 40ms + 400ms);
+}
+.hand-constellation.is-animated .hc-node--active {
+  animation:
+    hc-pop 0.4s var(--ease-spring) forwards,
+    hc-breathe 2.4s var(--ease) 1.2s infinite;
+}
+@keyframes hc-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes hc-pop {
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes hc-breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 6px var(--marigold));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hand-constellation.is-animated .hc-lines line {
+    stroke-dashoffset: 0;
+  }
+  .hand-constellation.is-animated .hc-node {
+    transform: scale(1);
+  }
+}
+
+/* ============ Login backdrop ============ */
+.auth__bg-hand {
+  position: absolute;
+  right: -6%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-8deg);
+  width: min(52vh, 460px);
+  height: auto;
+}
+@media (max-width: 720px) {
+  .auth__bg-hand {
+    right: -30%;
+    opacity: 0.6;
+  }
+}
+
+/* ============ Home hero ============ */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: var(--sp-12);
+  align-items: center;
+  padding: var(--sp-12) 0 var(--sp-16);
+}
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  max-width: 34ch;
+}
+.hero__title {
+  font-size: clamp(2.4rem, 5.5vw, var(--fs-3xl));
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.hero__title em {
+  font-style: normal;
+  color: var(--indigo);
+}
+.hero__sub {
+  font-size: var(--fs-md);
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+.hero__cta {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-top: var(--sp-2);
+}
+
+.hero-panel {
+  position: relative;
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 90% at 70% 15%, #3b48b8, transparent 60%),
+    linear-gradient(155deg, var(--indigo), var(--indigo-deep));
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-8);
+  color: #c3caf5; /* constellation lines/nodes on indigo */
+}
+.hero-panel::before {
+  /* faint landmark grid inside the panel */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+.hero-panel .hand-constellation {
+  max-width: 62%;
+  filter: drop-shadow(0 8px 24px rgb(0 0 0 / 0.3));
+}
+.hero-panel__tag {
+  position: absolute;
+  left: var(--sp-5);
+  bottom: var(--sp-5);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.1em;
+  color: rgb(255 255 255 / 0.72);
+}
+.hero-panel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--marigold);
+  box-shadow: 0 0 0 4px rgb(231 155 47 / 0.25);
+  animation: hc-blink 1.8s var(--ease) infinite;
+}
+@keyframes hc-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-8);
+    padding-top: var(--sp-8);
+  }
+  .hero-copy {
+    max-width: none;
+  }
+  .hero-panel {
+    aspect-ratio: 16 / 9;
+  }
+  .hero-panel .hand-constellation {
+    max-width: 42%;
+  }
+}
+
+/* ============ Continue strip ============ */
+.continue-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--indigo-soft);
+  border: 1px solid var(--indigo-line);
+  border-radius: var(--r-card);
+  flex-wrap: wrap;
+}
+.continue-strip strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+}
+
+/* ============ Home feature path (Learn → Practice → Converse) ============ */
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+}
+@media (max-width: 760px) {
+  .path-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.path-card {
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  min-height: 190px;
+  position: relative;
+}
+.path-card__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--indigo);
+  letter-spacing: 0.05em;
+}
+.path-card__arrow {
+  color: var(--ink-3);
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.path-card:hover .path-card__arrow {
+  transform: translateX(4px);
+  color: var(--indigo);
+}
+.path-card h3 {
+  font-size: var(--fs-lg);
+  margin-top: var(--sp-2);
+}
+.path-card p {
+  font-size: var(--fs-sm);
+  flex: 1;
+}
+.path-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--sp-2);
+}
+
+/* ============ Side tiles (sign of the day / streak) ============ */
+.side-grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 760px) {
+  .side-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.side-tile {
+  padding: var(--sp-5) var(--sp-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.glyph-badge {
+  width: 66px;
+  height: 66px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 30px;
+  background: var(--indigo-soft);
+  color: var(--indigo);
+  border: 1px solid var(--indigo-line);
+  flex-shrink: 0;
+}
+.glyph-badge--warm {
+  background: var(--marigold-soft);
+  color: var(--marigold-deep);
+  border-color: var(--marigold-line);
+  font-size: 28px;
+}
+.side-tile__body {
+  flex: 1;
+  min-width: 0;
+}
+.side-tile__body h3 {
+  font-size: var(--fs-lg);
+  margin: 2px 0 var(--sp-2);
+}
+.side-tile__body p {
+  font-size: var(--fs-sm);
+  margin: 0;
+}
