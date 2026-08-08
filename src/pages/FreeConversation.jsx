@@ -30,19 +30,20 @@ const GREETING = "Hi! I'm happy to chat about anything. Pick a word below and si
 
 export default function FreeConversation() {
   const navigate = useNavigate();
-  const { recordAttempt } = useStore();
+  const { state, recordAttempt } = useStore();
   const award = useAwardToasts();
+  const voiceDefault = state.settings?.voiceOn ?? false;
 
   const trackerRef = useRef(null);
   const transcriptRef = useRef(null);
-  const voiceRef = useRef(false);
+  const voiceRef = useRef(voiceDefault);
 
   const [messages, setMessages] = useState(() => [{ id: ++msgId, role: "ai", text: GREETING }]);
   const [topic, setTopic] = useState("");
   const [selectedId, setSelectedId] = useState("hello");
   const [status, setStatus] = useState("user"); // user | ai
   const [phase, setPhase] = useState("loading");
-  const [voiceOn, setVoiceOn] = useState(false);
+  const [voiceOn, setVoiceOn] = useState(voiceDefault);
 
   useEffect(() => {
     const el = transcriptRef.current;
@@ -95,6 +96,18 @@ export default function FreeConversation() {
   }, [selectedId, recordAttempt, award, pushMessage, respond]);
 
   const doCapture = useCallback(() => trackerRef.current?.capture(), []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.code === "Space" && status === "user" && phase === "idle"
+        && e.target === document.body) {
+        e.preventDefault();
+        doCapture();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [status, phase, doCapture]);
 
   const toggleVoice = () => {
     setVoiceOn((v) => {

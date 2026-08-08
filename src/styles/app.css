@@ -1952,3 +1952,91 @@ select.input {
 .badge__body span { font-size: var(--fs-xs); color: var(--ink-3); }
 
 .prog-cta { margin-top: var(--sp-8); display: flex; justify-content: center; }
+
+/* ============ Settings ============ */
+.set-section { margin-bottom: var(--sp-4); }
+.set-section__title {
+  font-size: var(--fs-md);
+  margin-bottom: var(--sp-2);
+}
+.set-section--danger { border-color: var(--bad-soft); }
+.set-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding: var(--sp-4) 0;
+  border-top: 1px solid var(--line);
+}
+.set-row:first-of-type { border-top: 0; padding-top: var(--sp-2); }
+.set-row__text { min-width: 0; }
+.set-row__label {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  display: block;
+}
+.set-row__desc {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  margin-top: 2px;
+  max-width: 62ch;
+}
+.set-row__desc code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--surface-2);
+  padding: 1px 5px;
+  border-radius: 5px;
+  color: var(--ink-2);
+}
+.set-note {
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+  margin-top: var(--sp-2);
+}
+
+/* Switch */
+.switch {
+  flex-shrink: 0;
+  width: 46px;
+  height: 27px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+  position: relative;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.switch.is-on {
+  background: var(--indigo);
+  border-color: var(--indigo);
+}
+.switch__dot {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease);
+}
+.switch.is-on .switch__dot { transform: translateX(19px); }
+
+/* Danger buttons */
+.set-danger { color: var(--bad); }
+.set-danger:hover { background: var(--bad-soft); border-color: var(--bad); }
+.set-danger-btn { background: var(--bad); }
+.set-danger-btn:hover { background: #a5322a; }
+
+/* Modal internals */
+.modal__title { font-size: var(--fs-lg); margin-bottom: var(--sp-3); }
+.modal__body { color: var(--ink-2); font-size: var(--fs-sm); }
+.modal__actions {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: flex-end;
+  margin-top: var(--sp-6);
+}

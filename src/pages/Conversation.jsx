@@ -32,14 +32,15 @@ export default function Conversation() {
   const { scenarioId } = useParams();
   const navigate = useNavigate();
   const scenario = getScenario(scenarioId);
-  const { recordAttempt, completeScenario } = useStore();
+  const { state, recordAttempt, completeScenario } = useStore();
   const award = useAwardToasts();
+  const voiceDefault = state.settings?.voiceOn ?? false;
 
   const trackerRef = useRef(null);
   const transcriptRef = useRef(null);
   const allScoresRef = useRef([]);
   const beatAttemptsRef = useRef([]);
-  const voiceRef = useRef(false);
+  const voiceRef = useRef(voiceDefault);
 
   const [messages, setMessages] = useState(() =>
     scenario ? [{ id: ++msgId, role: "ai", text: scenario.beats[0].ai }] : [],
@@ -48,7 +49,7 @@ export default function Conversation() {
   const [expectIdx, setExpectIdx] = useState(0);
   const [status, setStatus] = useState("user"); // user | ai | done
   const [phase, setPhase] = useState("loading");
-  const [voiceOn, setVoiceOn] = useState(false);
+  const [voiceOn, setVoiceOn] = useState(voiceDefault);
   const [recap, setRecap] = useState(null); // { avg, count } — set at finish
 
   // Auto-scroll transcript to the newest message.
@@ -135,6 +136,18 @@ export default function Conversation() {
   }, [scenario, beatIndex, expectIdx, recordAttempt, award, pushMessage, advanceAI, finish]);
 
   const doCapture = useCallback(() => trackerRef.current?.capture(), []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.code === "Space" && status === "user" && phase === "idle"
+        && e.target === document.body) {
+        e.preventDefault();
+        doCapture();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [status, phase, doCapture]);
 
   const toggleVoice = () => {
     setVoiceOn((v) => {

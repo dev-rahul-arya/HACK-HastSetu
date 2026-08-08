@@ -46,7 +46,7 @@ export default function Landing() {
         </div>
       </header>
 
-      <main className="landing-main">
+      <main className="landing-main" id="main-content">
         <section className="hero-grid">
           <div className="hero-copy">
             <span className="eyebrow">हस्तसेतु · the hand bridge</span>

@@ -98,5 +98,13 @@ _(Tracking here instead of an external task list.)_
       hand-drawn 14-day **SVG trend chart** (`Chart.jsx`, no lib), **trouble
       signs** with drill link, **badge gallery** (earned/locked), and P1
       **certificate export** (canvas → PNG) once Units 1 & 2 are learned.
-- [ ] **Stage 7 — Settings + a11y polish.** Voice/sim toggles, reset, focus
-      states, reduced motion, keyboard capture.
+- [x] **Stage 7 — Settings + a11y polish.** `Settings.jsx` (simulation toggle,
+      AI-voice default, Gemini status from `.env`, account, reset-with-confirm
+      via reusable `Modal.jsx`); voice default now flows into conversations;
+      fixed duplicate `<main>` landmark; Space-to-capture added to conversations;
+      focus rings + reduced-motion already respected app-wide.
+
+**All 7 stages complete.** Full judge path works with no API key and no real
+tracker: Continue as demo → Learn a letter → Practice it → hold a signed
+conversation. Drop in `window.ISLTracker` (per `tracker/adapter.js`) to light up
+real mode with no frontend edits.

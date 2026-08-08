@@ -112,9 +112,10 @@ export default function AppLayout() {
           </div>
         </header>
 
-        <main id="main-content">
+        {/* Pages render their own <main>; this is just the scroll container. */}
+        <div id="main-content">
           <Outlet />
-        </main>
+        </div>
       </div>
 
       {/* Mobile bottom nav */}
