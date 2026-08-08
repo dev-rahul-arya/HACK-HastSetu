@@ -86,8 +86,11 @@ _(Tracking here instead of an external task list.)_
       feedback), **speed round** (30s sprint, back-to-back captures, ≥80 combo
       multiplier, personal best). `TrackerMount.capture()` now takes options
       (signId, durationMs, skipCountdown) and returns the result.
-- [ ] **Stage 5 — Converse.** Scenarios, turn loop, Gemini partner + scripted
-      fallback, speech toggle.
+- [x] **Stage 5 — Converse.** `scenarios.js` (4 scene graphs); `Converse.jsx`
+      picker (required signs, soft "Warm up first" chip); `Conversation.jsx`
+      chat transcript + TrackerMount turn loop, Gemini partner reacting to sign
+      quality with scripted fallback, `speechSynthesis` voice toggle (captions
+      always on), recap card + scenario-complete XP.
 - [ ] **Stage 6 — Progress.** Dashboard, mastery grid, SVG trend chart, badges.
 - [ ] **Stage 7 — Settings + a11y polish.** Voice/sim toggles, reset, focus
       states, reduced motion, keyboard capture.
