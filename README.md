@@ -74,8 +74,12 @@ _(Tracking here instead of an external task list.)_
       `Learn.jsx` (units grid, unlock states) and `Lesson.jsx` (split layout,
       capture flow, Space-to-capture, compact result + rule tips). Full feedback
       UI (dial/heatmap/LLM) is Stage 3.
-- [ ] **Stage 3 — Feedback engine.** ScoreDial, JointHeatmap, rule tips, Gemini
-      coach tip, ghost-overlay slot.
+- [x] **Stage 3 — Feedback engine.** `ScoreDial` (animated count-up, band
+      label, reduced-motion aware); `JointHeatmap` (schematic hand, two hands for
+      two-handed signs, joints tinted by error + labelled legend); `TipCard`
+      (rule tips + one Gemini coaching sentence, `prompts.js`, silent fallback);
+      ghost-overlay toggle + target skeleton in `TrackerMount`. Lesson now shows
+      the full feedback panel.
 - [ ] **Stage 4 — Practice.** Review queue (SRS), free drill, speed round.
 - [ ] **Stage 5 — Converse.** Scenarios, turn loop, Gemini partner + scripted
       fallback, speech toggle.

@@ -1,15 +1,16 @@
 // Lesson player (PRD §4.2) — the core screen. Split layout: reference (left) +
-// your camera / TrackerMount (right). Watch → Try it → 3-2-1 → capture → score
-// + tips. Stage 2 shows a compact result; Stage 3 swaps in the full feedback
-// engine (score dial, joint heatmap, LLM coaching).
+// your camera / TrackerMount (right). Watch → Try it → 3-2-1 → capture → the
+// full feedback engine: score dial, per-joint heatmap, and coaching tips.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../store/StoreContext.jsx";
 import { useAwardToasts } from "../components/Toast.jsx";
 import { getSign, signsInUnit } from "../data/signs.js";
-import { scoreBand } from "../store/progress.js";
 import TrackerMount from "../components/TrackerMount.jsx";
+import ScoreDial from "../components/ScoreDial.jsx";
+import JointHeatmap from "../components/JointHeatmap.jsx";
+import TipCard from "../components/TipCard.jsx";
 import { PlayIcon, CheckIcon, ArrowRightIcon } from "../components/icons.jsx";
 
 // Parent passes key={sign.id} so state resets naturally per sign.
@@ -100,13 +101,6 @@ export default function Lesson() {
   }
 
   const ss = state.signs[sign.id] || { attempts: 0, best: 0 };
-  const band = result ? scoreBand(result.score) : null;
-  const tips = result
-    ? (result.errorCodes || [])
-        .map((c) => sign.tips?.[c])
-        .filter(Boolean)
-        .slice(0, 2)
-    : [];
   const busy = phase === "countdown" || phase === "capturing";
 
   return (
@@ -157,16 +151,12 @@ export default function Lesson() {
           </div>
 
           {result && (
-            <div className={`result card result--${band.tone}`} aria-live="polite">
-              <div className="result__score">
-                <span className="result__num mono">{result.score}</span>
-                <span className="result__band">{band.label}</span>
+            <div className="feedback" aria-live="polite">
+              <div className="feedback__top card">
+                <ScoreDial key={ss.attempts} score={result.score} />
+                <JointHeatmap jointErrors={result.jointErrors} twoHanded={sign.twoHanded} />
               </div>
-              {tips.length > 0 && (
-                <ul className="result__tips">
-                  {tips.map((t, i) => <li key={i}>{t}</li>)}
-                </ul>
-              )}
+              <TipCard key={ss.attempts} sign={sign} result={result} />
             </div>
           )}
         </section>
