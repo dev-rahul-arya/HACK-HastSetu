@@ -95,7 +95,6 @@ export default function AppLayout() {
         </nav>
 
         <div className="side__foot">
-          <StreakChip count={streak} />
           <AccountMenu up />
         </div>
       </aside>

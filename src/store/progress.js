@@ -208,6 +208,31 @@ export function masteredCount(state) {
   return Object.values(state.signs).filter(isMastered).length;
 }
 
+/** Per-day average accuracy for the last N days (oldest → newest). value=null
+ *  on days with no attempts (chart draws a gap). */
+export function dailyAccuracy(state, days = 14) {
+  const now = new Date();
+  const buckets = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(now.getDate() - i);
+    buckets.push({ key: dayKey(d), date: d, scores: [] });
+  }
+  const byKey = Object.fromEntries(buckets.map((b) => [b.key, b]));
+  Object.values(state.signs).forEach((s) =>
+    (s.history || []).forEach((h) => {
+      const b = byKey[dayKey(new Date(h.t))];
+      if (b) b.scores.push(h.score);
+    }),
+  );
+  return buckets.map((b) => ({
+    date: b.date,
+    value: b.scores.length
+      ? Math.round(b.scores.reduce((a, c) => a + c, 0) / b.scores.length)
+      : null,
+  }));
+}
+
 /** Average accuracy over the last N days across all attempts. */
 export function recentAccuracy(state, days = 7) {
   const cutoff = Date.now() - days * DAY;

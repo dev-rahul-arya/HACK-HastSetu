@@ -91,6 +91,12 @@ _(Tracking here instead of an external task list.)_
       chat transcript + TrackerMount turn loop, Gemini partner reacting to sign
       quality with scripted fallback, `speechSynthesis` voice toggle (captions
       always on), recap card + scenario-complete XP.
-- [ ] **Stage 6 — Progress.** Dashboard, mastery grid, SVG trend chart, badges.
+- [x] **Free talk + chrome tweaks.** Open-ended `FreeConversation.jsx`
+      (`/converse/free`) with a plus-icon card in the picker; Gemini-driven with
+      scripted fallbacks; removed the streak chip from the desktop sidebar.
+- [x] **Stage 6 — Progress.** Stats row, alphabet/digit **mastery heat-grid**,
+      hand-drawn 14-day **SVG trend chart** (`Chart.jsx`, no lib), **trouble
+      signs** with drill link, **badge gallery** (earned/locked), and P1
+      **certificate export** (canvas → PNG) once Units 1 & 2 are learned.
 - [ ] **Stage 7 — Settings + a11y polish.** Voice/sim toggles, reset, focus
       states, reduced motion, keyboard capture.

@@ -72,3 +72,39 @@ export function converseMessages(scenario, beat, history, lastAttempt) {
     { role: "user", content: `[context] ${JSON.stringify(context)}` },
   ];
 }
+
+/**
+ * Free-talk partner: no scene graph. The learner signs one word at a time on any
+ * topic; the AI keeps an open, friendly conversation going.
+ */
+export function freeConverseMessages(topic, history, lastAttempt) {
+  const system =
+    "You are a warm, patient conversation partner helping someone practise " +
+    "Indian Sign Language. The learner communicates by signing ONE word at a " +
+    "time, so react to each word and keep the chat flowing with short, simple " +
+    "questions. Reply in 1–2 short sentences, plain English, no emojis or JSON. " +
+    `Topic: ${topic ? topic : "anything the learner wants"}.`;
+
+  return [
+    { role: "system", content: system },
+    ...history.map((m) => ({
+      role: m.role === "ai" ? "assistant" : "user",
+      content: m.text,
+    })),
+    {
+      role: "user",
+      content: lastAttempt
+        ? `I just signed "${lastAttempt.label}". Continue our conversation.`
+        : "Start the conversation with a friendly greeting and a question.",
+    },
+  ];
+}
+
+// Scripted fallbacks when no LLM key is set (free-talk still feels alive).
+export const FREE_FALLBACKS = [
+  "Nice one! Tell me more — what else is on your mind?",
+  "Got it. What would you like to talk about next?",
+  "Lovely signing. Keep going — pick any word!",
+  "I see! And what about after that?",
+  "Great. Sign another word whenever you're ready.",
+];

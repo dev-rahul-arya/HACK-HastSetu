@@ -125,3 +125,9 @@ export const PlayIcon = (p) => (
     <path d="M8 5v14l11-7Z" />
   </Svg>
 );
+
+export const PlusIcon = (p) => (
+  <Svg {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </Svg>
+);

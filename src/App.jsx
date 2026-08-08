@@ -14,6 +14,7 @@ import Lesson from "./pages/Lesson.jsx";
 import Practice from "./pages/Practice.jsx";
 import Converse from "./pages/Converse.jsx";
 import Conversation from "./pages/Conversation.jsx";
+import FreeConversation from "./pages/FreeConversation.jsx";
 import Progress from "./pages/Progress.jsx";
 import Settings from "./pages/Settings.jsx";
 
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/practice" element={<Practice />} />
           <Route path="/practice/:tab" element={<Practice />} />
           <Route path="/converse" element={<Converse />} />
+          <Route path="/converse/free" element={<FreeConversation />} />
           <Route path="/converse/:scenarioId" element={<Conversation />} />
           <Route path="/progress" element={<Progress />} />
           <Route path="/settings" element={<Settings />} />

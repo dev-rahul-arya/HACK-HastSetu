@@ -7,7 +7,7 @@ import { useStore } from "../store/StoreContext.jsx";
 import { SCENARIOS } from "../data/scenarios.js";
 import { getSign } from "../data/signs.js";
 import { isLearned } from "../store/progress.js";
-import { ArrowRightIcon, CheckIcon } from "../components/icons.jsx";
+import { ArrowRightIcon, CheckIcon, PlusIcon } from "../components/icons.jsx";
 
 export default function Converse() {
   const { state } = useStore();
@@ -24,6 +24,13 @@ export default function Converse() {
       </div>
 
       <div className="grid grid-3">
+        <Link to="/converse/free" className="card card-link conv-card conv-card--free">
+          <span className="conv-free__plus" aria-hidden="true"><PlusIcon size={26} /></span>
+          <h3>Free talk</h3>
+          <p>Open-ended chat with the AI on any topic — sign any word you like.</p>
+          <span className="pill pill--accent">Start talking</span>
+        </Link>
+
         {SCENARIOS.map((sc) => {
           const done = state.scenarios[sc.id]?.completed;
           const unlearned = sc.signs.filter((id) => !isLearned(state.signs[id]));

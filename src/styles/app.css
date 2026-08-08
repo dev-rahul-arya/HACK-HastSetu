@@ -1822,3 +1822,133 @@ kbd {
   line-height: 1;
   color: var(--indigo);
 }
+
+/* ============ Converse — free talk ============ */
+.conv-card--free {
+  border-style: dashed;
+  border-color: var(--indigo-line);
+  background:
+    radial-gradient(120% 90% at 50% 0%, var(--indigo-soft), transparent 70%),
+    var(--surface);
+  align-items: flex-start;
+}
+.conv-free__plus {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--indigo);
+  color: #fff;
+  margin-bottom: var(--sp-1);
+  box-shadow: var(--shadow-sm);
+}
+.free-topic {
+  max-width: 420px;
+  margin-bottom: var(--sp-5);
+}
+select.input {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%),
+    linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 20px, calc(100% - 13px) 20px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: var(--sp-8);
+  cursor: pointer;
+}
+
+/* ============ Progress ============ */
+.muted { color: var(--ink-3); font-size: var(--fs-sm); }
+
+.prog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+@media (max-width: 800px) {
+  .prog-grid { grid-template-columns: 1fr; }
+}
+
+.chart__svg { width: 100%; height: auto; }
+.chart__grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+.chart__axis { fill: var(--ink-3); font-family: var(--font-mono); font-size: 9px; }
+.chart__line { fill: none; stroke: var(--indigo); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.chart__dot { fill: var(--indigo); }
+.chart__empty { fill: var(--ink-3); font-size: 12px; }
+
+.trouble-list { display: flex; flex-direction: column; gap: var(--sp-3); }
+.trouble-list li { display: flex; align-items: center; gap: var(--sp-3); }
+.trouble-name { width: 44px; flex-shrink: 0; font-weight: 600; color: var(--ink); }
+.trouble-name:hover { text-decoration: none; color: var(--indigo); }
+.trouble-bar { flex: 1; height: 8px; background: var(--surface-2); border-radius: var(--r-pill); overflow: hidden; }
+.trouble-bar__fill { display: block; height: 100%; border-radius: var(--r-pill); }
+.fill--good { background: var(--good); }
+.fill--warn { background: var(--warn); }
+.fill--bad { background: var(--bad); }
+.trouble-pct { width: 42px; text-align: right; flex-shrink: 0; font-size: var(--fs-sm); color: var(--ink-2); }
+
+.mastery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+.m-cell {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  border: 1px solid var(--line);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.m-cell:hover { text-decoration: none; transform: translateY(-2px); }
+.m-cell--empty { background: var(--surface-2); color: var(--ink-3); }
+.m-cell--good { background: var(--good-soft); color: var(--good); border-color: transparent; }
+.m-cell--warn { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+.m-cell--bad { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
+.mastery-legend {
+  display: flex;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp-3);
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border-radius: var(--r-card);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  opacity: 0.6;
+}
+.badge.is-earned { opacity: 1; border-color: var(--marigold-line); }
+.badge__medal {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--ink-3);
+  flex-shrink: 0;
+}
+.badge.is-earned .badge__medal {
+  background: linear-gradient(150deg, var(--marigold), var(--marigold-deep));
+  color: #fff;
+}
+.badge__body { display: flex; flex-direction: column; min-width: 0; }
+.badge__body strong { font-size: var(--fs-sm); }
+.badge__body span { font-size: var(--fs-xs); color: var(--ink-3); }
+
+.prog-cta { margin-top: var(--sp-8); display: flex; justify-content: center; }
