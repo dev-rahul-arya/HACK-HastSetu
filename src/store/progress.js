@@ -28,6 +28,15 @@ function clone(state) {
   return JSON.parse(JSON.stringify(state));
 }
 
+// Score band labels + tone (PRD §4.5). Never rely on colour alone — the label
+// carries the meaning.
+export function scoreBand(score) {
+  if (score >= 90) return { label: "Crisp", tone: "good" };
+  if (score >= 70) return { label: "Good sign", tone: "good" };
+  if (score >= 50) return { label: "Almost", tone: "warn" };
+  return { label: "Keep adjusting", tone: "bad" };
+}
+
 export function xpForScore(score) {
   if (score >= MASTERED_THRESHOLD) return 15;
   if (score >= LEARNED_THRESHOLD) return 10;

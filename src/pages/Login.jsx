@@ -15,7 +15,7 @@ export default function Login() {
   const [error, setError] = useState("");
 
   // Return to the originally requested route after login.
-  const dest = location.state?.from || "/";
+  const dest = location.state?.from || "/dashboard";
 
   function submit(e) {
     e.preventDefault();

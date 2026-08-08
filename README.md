@@ -61,11 +61,19 @@ _(Tracking here instead of an external task list.)_
       dummy auth + demo seed; HashRouter + auth guard; navbar; Login; Home.
 - [x] **Design overhaul — "Landmark".** Hand-constellation signature
       (`HandConstellation.jsx`) in the hero + login backdrop; reworked palette,
-      type scale, buttons, cards, nav; numbered learning-path cards.
-- [ ] **Stage 2 — Learn.** Tracker `adapter.js` done. TODO: `mockTracker.js`
-      (idle SVG hand + `captureAttempt` + `onRecognition` + `referencePose`),
-      `realTracker.js` stub, `TrackerMount.jsx`, `SignTile.jsx`, real `Learn.jsx`
-      (units grid) + `Lesson.jsx` (split layout + capture flow).
+      type scale, buttons, cards; numbered learning-path cards.
+- [x] **IA + chrome rework.** Public **Landing** page (`/`) split from the
+      authenticated **Dashboard** (`/dashboard`); app shell is now a desktop
+      **sidebar** + mobile **bottom nav** (`AppLayout.jsx`); all emoji replaced
+      with an SVG icon set (`icons.jsx`).
+- [x] **Stage 2 — Learn.** Shared `handModel.js` (21 landmarks, connections,
+      joint names); `mockTracker.js` (idle skeleton + improving scores +
+      correlated `jointErrors`/`errorCodes` + `referencePose`); `realTracker.js`
+      stub; `TrackerMount.jsx` (simulation pill, 3-2-1 countdown, progress ring,
+      flash, designed "unavailable" + camera-denied states); `SignTile.jsx`;
+      `Learn.jsx` (units grid, unlock states) and `Lesson.jsx` (split layout,
+      capture flow, Space-to-capture, compact result + rule tips). Full feedback
+      UI (dial/heatmap/LLM) is Stage 3.
 - [ ] **Stage 3 — Feedback engine.** ScoreDial, JointHeatmap, rule tips, Gemini
       coach tip, ghost-overlay slot.
 - [ ] **Stage 4 — Practice.** Review queue (SRS), free drill, speed round.
